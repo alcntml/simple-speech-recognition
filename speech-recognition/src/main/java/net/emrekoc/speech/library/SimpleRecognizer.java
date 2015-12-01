@@ -8,7 +8,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 
-
+import net.emrekoc.speech.library.enums.ErrorType;
 import net.emrekoc.speech.library.listeners.SpeechListener;
 
 import java.util.ArrayList;
@@ -103,10 +103,52 @@ public class SimpleRecognizer implements RecognitionListener {
 
     @Override
     public void onError(int error) {
-        Log.i(TAG, "onError");
         recognizer.cancel();
         if (listener!=null){
-            listener.onError();
+            ErrorType errorType = null;
+            switch (error){
+                /**NETWORK TIMEOUT ERROR**/
+                case 1:
+                    errorType = ErrorType.NETWORK_TIMEOUT_ERROR;
+                    break;
+                 /**NETWORK ERROR**/
+                case 2:
+                    errorType = ErrorType.NO_CONNECTION_ERROR;
+                    break;
+                 /**AUDIO RECORDING ERROR**/
+                case 3:
+                    errorType = ErrorType.AUDIO_RECORDING_ERROR;
+                    break;
+                 /**SERVER ERROR. ALSO SHOULD BE CONNECTION PROBLEM**/
+                case 4:
+                    errorType = ErrorType.SERVER_ERROR;
+                    break;
+                 /**CLIENT SIDE ERROR**/
+                case 5:
+                    errorType = ErrorType.CLIENT_ERROR;
+                    break;
+                 /**SPEECH TIMEOUT**/
+                case 6:
+                    errorType = ErrorType.SPEECH_TIMEOUT_ERROR;
+                    break;
+                 /**NO MATCH**/
+                case 7:
+                    errorType = ErrorType.NO_MATCH_ERROR;
+                    break;
+                 /**RECOGNIZER BUSY**/
+                case 8:
+                    errorType = ErrorType.RECOGNIZER_BUSY_ERROR;
+                    break;
+                 /**INSUFFICIENT PERMISSIONS**/
+                case 9:
+                    errorType = ErrorType.INSUFFICIENT_PERMISSIONS_ERROR;
+                    break;
+                default:
+                    errorType = ErrorType.UNKNOWN;
+                    break;
+            }
+            Log.i(TAG, "onError: "+error);
+            listener.onError(errorType);
         }
     }
 

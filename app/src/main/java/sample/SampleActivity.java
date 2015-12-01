@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import net.emrekoc.speech.library.SimpleRecognizer;
+import net.emrekoc.speech.library.enums.ErrorType;
 import net.emrekoc.speech.library.listeners.SpeechListener;
 
 import java.util.ArrayList;
@@ -39,9 +39,9 @@ public class SampleActivity extends Activity {
             }
 
             @Override
-            public void onError() {
+            public void onError(ErrorType errorType) {
                 lvSpeechResults.setAdapter(null);
-                Toast.makeText(SampleActivity.this,"Error: Try Again",Toast.LENGTH_LONG).show();
+                Toast.makeText(SampleActivity.this,"Error:"+errorType+" Try Again",Toast.LENGTH_LONG).show();
             }
         });
 

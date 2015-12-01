@@ -1,5 +1,7 @@
 package net.emrekoc.speech.library.listeners;
 
+import net.emrekoc.speech.library.enums.ErrorType;
+
 import java.util.ArrayList;
 
 /**
@@ -7,5 +9,5 @@ import java.util.ArrayList;
  */
 public interface SpeechListener {
      void onSpeechRecognized(ArrayList<String> results);
-     void onError();
+     void onError(ErrorType errorType);
 }
