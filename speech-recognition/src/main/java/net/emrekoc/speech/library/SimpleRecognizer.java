@@ -18,7 +18,6 @@ import java.util.ArrayList;
  */
 public class SimpleRecognizer implements RecognitionListener {
     String TAG = SimpleRecognizer.class.getSimpleName();
-    static SimpleRecognizer speechRecognition;
     private SpeechRecognizer recognizer;
     private SpeechListener listener;
 
@@ -105,6 +104,7 @@ public class SimpleRecognizer implements RecognitionListener {
     @Override
     public void onError(int error) {
         Log.i(TAG, "onError");
+        recognizer.cancel();
         if (listener!=null){
             listener.onError();
         }
